@@ -5,6 +5,19 @@ using subastasProjectFinal.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Agregar CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder
+            .SetIsOriginAllowed(_ => true) // Permite cualquier origen
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
+});
+
 // Agregar configuración de MongoDB
 builder.Services.Configure<MongoDBSettings>(
     builder.Configuration.GetSection("MongoDB"));
@@ -51,6 +64,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Añadir el uso de CORS antes de la autorización y el mapeo de controladores
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
