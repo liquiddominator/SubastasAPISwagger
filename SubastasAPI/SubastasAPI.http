@@ -1,0 +1,6 @@
+@SubastasAPI_HostAddress = http://localhost:5239
+
+GET {{SubastasAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
