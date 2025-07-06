@@ -60,6 +60,9 @@ public partial class Usuario
     public virtual ICollection<Puja> Pujas { get; set; } = new List<Puja>();
 
     [JsonIgnore]
+    public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+
+    [JsonIgnore]
     public virtual ICollection<Reporte> Reportes { get; set; } = new List<Reporte>();
 
     [JsonIgnore]

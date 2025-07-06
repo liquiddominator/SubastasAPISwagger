@@ -33,6 +33,8 @@ public partial class SubastasContext : DbContext
 
     public virtual DbSet<Puja> Pujas { get; set; }
 
+    public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
+
     public virtual DbSet<Reporte> Reportes { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
@@ -307,6 +309,25 @@ public partial class SubastasContext : DbContext
             entity.HasOne(d => d.Usuario).WithMany(p => p.Pujas)
                 .HasForeignKey(d => d.UsuarioId)
                 .HasConstraintName("FK__Pujas__UsuarioId__5CD6CB2B");
+        });
+
+        modelBuilder.Entity<RefreshToken>(entity =>
+        {
+            entity.HasKey(e => e.RefreshTokenId).HasName("PK__RefreshT__F5845E39CE987A98");
+
+            entity.HasIndex(e => e.Token, "IX_RefreshTokens_Token");
+
+            entity.Property(e => e.Creado)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Expira).HasColumnType("datetime");
+            entity.Property(e => e.IpCreacion).HasMaxLength(45);
+            entity.Property(e => e.ReemplazadoPor).HasMaxLength(255);
+            entity.Property(e => e.Token).HasMaxLength(255);
+
+            entity.HasOne(d => d.Usuario).WithMany(p => p.RefreshTokens)
+                .HasForeignKey(d => d.UsuarioId)
+                .HasConstraintName("FK_RefreshTokens_Usuarios");
         });
 
         modelBuilder.Entity<Reporte>(entity =>
