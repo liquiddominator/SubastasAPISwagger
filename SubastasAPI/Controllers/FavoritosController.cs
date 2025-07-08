@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SubastasAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SubastasAPI.Controllers
 {
@@ -21,6 +22,7 @@ namespace SubastasAPI.Controllers
         }
 
         // GET: api/Favoritos
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Favorito>>> GetFavoritos()
         {
@@ -28,6 +30,7 @@ namespace SubastasAPI.Controllers
         }
 
         // GET: api/Favoritos/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Favorito>> GetFavorito(int id)
         {
@@ -43,6 +46,7 @@ namespace SubastasAPI.Controllers
 
         // PUT: api/Favoritos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "comprador")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFavorito(int id, Favorito favorito)
         {
@@ -74,6 +78,7 @@ namespace SubastasAPI.Controllers
 
         // POST: api/Favoritos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "comprador")]
         [HttpPost]
         public async Task<ActionResult<Favorito>> PostFavorito(Favorito favorito)
         {
@@ -84,6 +89,7 @@ namespace SubastasAPI.Controllers
         }
 
         // DELETE: api/Favoritos/5
+        [Authorize(Roles = "comprador")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFavorito(int id)
         {

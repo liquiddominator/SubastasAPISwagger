@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SubastasAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SubastasAPI.Controllers
 {
@@ -21,6 +22,7 @@ namespace SubastasAPI.Controllers
         }
 
         // GET: api/ImagenesProductos
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ImagenesProducto>>> GetImagenesProductos()
         {
@@ -28,6 +30,7 @@ namespace SubastasAPI.Controllers
         }
 
         // GET: api/ImagenesProductos/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<ImagenesProducto>> GetImagenesProducto(int id)
         {
@@ -43,6 +46,7 @@ namespace SubastasAPI.Controllers
 
         // PUT: api/ImagenesProductos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "vendedor,admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutImagenesProducto(int id, ImagenesProducto imagenesProducto)
         {
@@ -74,6 +78,7 @@ namespace SubastasAPI.Controllers
 
         // POST: api/ImagenesProductos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "vendedor,admin")]
         [HttpPost]
         public async Task<ActionResult<ImagenesProducto>> PostImagenesProducto(ImagenesProducto imagenesProducto)
         {
@@ -84,6 +89,7 @@ namespace SubastasAPI.Controllers
         }
 
         // DELETE: api/ImagenesProductos/5
+        [Authorize(Roles = "vendedor,admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteImagenesProducto(int id)
         {

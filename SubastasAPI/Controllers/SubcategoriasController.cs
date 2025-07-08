@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SubastasAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SubastasAPI.Controllers
 {
@@ -21,6 +22,7 @@ namespace SubastasAPI.Controllers
         }
 
         // GET: api/Subcategorias
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Subcategoria>>> GetSubcategorias()
         {
@@ -28,6 +30,7 @@ namespace SubastasAPI.Controllers
         }
 
         // GET: api/Subcategorias/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Subcategoria>> GetSubcategoria(int id)
         {
@@ -43,6 +46,7 @@ namespace SubastasAPI.Controllers
 
         // PUT: api/Subcategorias/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSubcategoria(int id, Subcategoria subcategoria)
         {
@@ -74,6 +78,7 @@ namespace SubastasAPI.Controllers
 
         // POST: api/Subcategorias
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<ActionResult<Subcategoria>> PostSubcategoria(Subcategoria subcategoria)
         {
@@ -84,6 +89,7 @@ namespace SubastasAPI.Controllers
         }
 
         // DELETE: api/Subcategorias/5
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSubcategoria(int id)
         {

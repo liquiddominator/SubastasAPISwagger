@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SubastasAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SubastasAPI.Controllers
 {
@@ -21,6 +22,7 @@ namespace SubastasAPI.Controllers
         }
 
         // GET: api/Reportes
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reporte>>> GetReportes()
         {
@@ -28,6 +30,7 @@ namespace SubastasAPI.Controllers
         }
 
         // GET: api/Reportes/5
+        [Authorize(Roles = "admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Reporte>> GetReporte(int id)
         {
@@ -43,6 +46,7 @@ namespace SubastasAPI.Controllers
 
         // PUT: api/Reportes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutReporte(int id, Reporte reporte)
         {
@@ -74,6 +78,7 @@ namespace SubastasAPI.Controllers
 
         // POST: api/Reportes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<ActionResult<Reporte>> PostReporte(Reporte reporte)
         {
@@ -84,6 +89,7 @@ namespace SubastasAPI.Controllers
         }
 
         // DELETE: api/Reportes/5
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReporte(int id)
         {

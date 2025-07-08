@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SubastasAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SubastasAPI.Controllers
 {
@@ -21,6 +22,7 @@ namespace SubastasAPI.Controllers
         }
 
         // GET: api/Subastas
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Subasta>>> GetSubastas()
         {
@@ -28,6 +30,7 @@ namespace SubastasAPI.Controllers
         }
 
         // GET: api/Subastas/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Subasta>> GetSubasta(int id)
         {
@@ -43,6 +46,7 @@ namespace SubastasAPI.Controllers
 
         // PUT: api/Subastas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "vendedor,admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSubasta(int id, Subasta subasta)
         {
@@ -74,6 +78,7 @@ namespace SubastasAPI.Controllers
 
         // POST: api/Subastas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "vendedor")]
         [HttpPost]
         public async Task<ActionResult<Subasta>> PostSubasta(Subasta subasta)
         {
@@ -84,6 +89,7 @@ namespace SubastasAPI.Controllers
         }
 
         // DELETE: api/Subastas/5
+        [Authorize(Roles = "vendedor,admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSubasta(int id)
         {

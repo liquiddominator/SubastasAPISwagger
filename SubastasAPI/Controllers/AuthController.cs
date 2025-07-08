@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace SubastasAPI.Controllers
             _config = config;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(Dtos.LoginRequest request)
         {
@@ -93,6 +95,7 @@ namespace SubastasAPI.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] Dtos.RegisterRequest request)
         {
@@ -114,8 +117,10 @@ namespace SubastasAPI.Controllers
                 Estado = "activo",
                 Saldo = 0,
                 SaldoBloqueado = 0,
-                FechaRegistro = DateTime.Now
+                FechaRegistro = DateTime.Now,
+                UrlImagen = "https://cxihohhitbhrqqwhnbru.supabase.co/storage/v1/object/public/subastas-assets/users/user_default.png"
             };
+
 
             // Obtener el rol antes de agregar a la BD
             var rol = await _context.Roles.FirstOrDefaultAsync(r => r.Nombre == request.Rol);
@@ -132,6 +137,7 @@ namespace SubastasAPI.Controllers
             return Ok(new { mensaje = "Usuario registrado exitosamente" });
         }
 
+        [AllowAnonymous]
         [HttpPost("refresh")]
         public async Task<IActionResult> Refresh([FromBody] Dtos.RefreshRequest request)
         {
@@ -173,6 +179,8 @@ namespace SubastasAPI.Controllers
                 refreshToken = newRefreshToken.Token
             });
         }
+
+        [Authorize]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout([FromBody] LogoutRequest request)
         {
