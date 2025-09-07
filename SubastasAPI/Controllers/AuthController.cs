@@ -106,6 +106,8 @@ namespace SubastasAPI.Controllers
 
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
+            var defaultUserImage = _config.GetSection("Supabase")["DefaultUserImage"];
+
             var usuario = new Usuario
             {
                 Username = request.Username,
@@ -118,7 +120,7 @@ namespace SubastasAPI.Controllers
                 Saldo = 0,
                 SaldoBloqueado = 0,
                 FechaRegistro = DateTime.Now,
-                UrlImagen = "https://cxihohhitbhrqqwhnbru.supabase.co/storage/v1/object/public/subastas-assets/users/user_default.png"
+                UrlImagen = defaultUserImage
             };
 
 
